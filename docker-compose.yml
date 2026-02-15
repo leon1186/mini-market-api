@@ -1,0 +1,43 @@
+services:
+
+  db:
+    image: postgres:15
+    container_name: market_db
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  api:
+    build: ./api
+    container_name: market_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    command: >
+      sh -c "
+      until pg_isready -h db -p 5432; do
+        echo 'Waiting for postgres...';
+        sleep 2;
+      done &&
+      python manage.py migrate &&
+      gunicorn --bind 0.0.0.0:8000 config.wsgi:application
+      "
+
+  
+  frontend:
+    build: ./frontend
+    container_name: market_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
+
+
+
+
