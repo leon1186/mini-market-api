@@ -1,0 +1,147 @@
+STEPS ON CREATING EC2 ON AWS 
+
+
+1.SEARCH FOR EC2
+2.look for LUNCH INSTANCE ====>>GIVVE IT A NAME lecture_instance
+3.SELECT  normamlly t2 micro free tier
+4.AMAZON LINUX 2023 KERNEL-6.1 AMI
+7.64-bit(x86) choice
+8.create a key pair: call it ===>lecture_key
+   RSA
+    .pem
+take t3 micro since is still elegible 
+9.  1. allow ssh traffic from 
+    2.my IP 
+    3.allow http traffic from the internet. (leave the rest blank)
+
+
+10.lunch!!! only one.     
+
+
+we dont want to commit our lecture_key to our repo
+
+11. got to INSTANCE: youll see the instance specifications
+
+
+
+.ssh/lecture_rsa
+
+
+12.copy and paste public ipv4 address.
+#click on the link instance everything is here.
+
+13. mv .ssh/lecture_key.pem vs_code/aws/people_getter2/frontend. all of it mac terminal.
+
+
+14.ALL THIS IN MAC TERMINAL.
+all this is inn connect from instance:
+A.Run this command, if necessary, to ensure your key is not publicly viewable.
+chmod 400 "lecture_key.pem"
+
+B.Connect to your instance using its Public DNS:
+ssh -i "lecture_key.pem" ec2-user@ec2-18-220-220-243.us-east-2.compute.amazonaws.com#replacing your .pem file and ip as appropriate.
+
+c.answer yes!!!
+d. with this youve create you ec2 on your terminal.
+e.cd .ssh and cd to go back.
+f. in this terminal: ~/
+sudo yum install -y git && \
+sudo yum install docker -y && \
+sudo service docker start && \
+sudo usermod -aG docker $USER  && \
+# sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose && \
+# sudo chmod +x /usr/local/bin/docker-compose && \
+newgrp docker
+
+
+
+
+
+15.MAC TERMINAL:
+ssh-keygen -t rsa -b 4096 -C "myname@gmail.com"
+
+16.copy the lecture_rsa.pub into git hub generating a key.
+
+
+17.scp -i "<KEYNAME>.pem" id_rsa id_rsa.pub ec2-user@ec2-44-199-230-104.compute-1.amazonaws.com:~/.ssh/
+
+    
+#######
+EC2 terminal 
+18.eval "$(ssh-agent -s)"
+#expected resposne ==>>> Agent pid 31175
+19.ssh-add ~/.ssh/id_rsa
+20.GIT CLONE SSH CODE FROM GIT HUB as SSH
+
+
+
+DO THIS ON YOUR MAC IN YOUR TERMINAL: everything has to be in 
+~/ssh folder # you could find it by using #ls -lart 
+
+ssh is hidden home. 
+
+lecture_rsa private this is the one you gonna do cat and paste from mac terminal to ec2 terminal. make sure you are in .ssh to da that
+lecture_rsa.pub public this is the one im copying in github SSH KEYS. as new  add a tittle.copy that key and add it in github
+description is very important for best practices.
+
+
+#########.ssh -keygen -t rsa -b 4096 -C "myname@gmail". dont mind the gmail
+
+#put the new api by ec2 in javascript very important
+
+
+key.pem will let me get in to the instance. thats whats for.he
+actually placed this in front_end.
+
+chmod 400"<lecture_key.pem>" =====> remember to put it in the front-end very important in the terminal. make sure access is open to read  user-group-all 4-0-0 read-blank -blank.
+
+to read the key is ===>> vi lecture_rsa 
+
+
+
+###########################################
+
+run this on mac terminal:MAC TERMINAL
+make sure you have in your ~/.ssh     lecture_key.pom   -lecture_rsa.pub  -   lecture_rsa
+
+
+
+
+
+CHECK THAT IN BOTH COMPUTERS. MAC AND EC2.
+UNDER .SSH
+
+MAC TEMINAL:
+
+#cd .shh if need to evrything here is under .ssh 
+
+1.have this 3 lecture_key.pom   -lecture_rsa.pub  -   lecture_rsa
+.ssh always here then:
+
+2.scp -i "<KEYNAME>.pem" id_rsa id_rsa.pub ec2-user#.......compute-1.amazonans.com:~/.SSH ...........  rember to put the right connect to your instance usiing its public DNS:   under connect-ssh client --number 4th. that has to be it.JUST COMPLETE THAT PART BY PASTING IT.
+3. before moving make sure they are there
+
+
+EC2:
+4.run this on your ec2=====>>>  eval "$(ssh-agent -S)". run it you should be able to see Agent pid 29120 in this case.. check this 
+
+5.ssh-ass ~/.ssh/lecture_rsa
+
+6. get out of .shh 
+7.cd make suere you ~/ home.
+8.git clone repository given as people_getter2  as ssh and ls to check.
+9.cd people_getter2 
+10. .start_up and run 
+11. docker ps to check docker. entry and out ports check thi sin EC2
+
+
+
+
+
+
+
+
+12.when open in instance open address make sure https://ip>address go http public version
+
+
+13.100 hours in aws max 

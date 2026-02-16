@@ -1,0 +1,113 @@
+1.CREATE A DOCKERFILE.
+
+--check what we got in here.
+
+2.CREATE DOCKE-COMPOSE.yml
+
+----check what we got in here.
+
+3.BEFORE CODING GET venv
+4.UP_sh
+5.DOWN_sh
+6.git ignore
+7.ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"] in settings 
+8.check INSTALLED_APPS
+9.WSGI_APPLICATION = "wines.wsgi.application"
+10.DATABASES -------->> name and port [This is the port on the host machine (which will be mapped to 5432 in the container)
+    ]
+11.
+WSGI_APPLICATION = "wines.wsgi.application"
+12.7-12 is all in settings...
+
+
+#############################################################
+
+docker compose ps -a
+
+
+#############################################################
+docker compose exec api python /src/manage.py createsuperuser
+
+            ---to create admin 
+
+docker compose exec api python /src/manage.py shell
+
+
+
+            from django.db import connection
+            connection.ensure_connection()
+
+
+            connection.introspection.table_names()
+
+           
+           ###########
+           
+            from wine_app.models import Wine
+
+            Wine.objects.all()
+
+            Wine.objects.count()
+
+            Wine.objects.first()
+
+
+
+            ##############
+
+
+            adding data:
+
+        wine = Wine.objects.create(
+            name="Malbec",
+            country="Argentina",
+            year=2020,
+            price=18.99
+        )
+
+
+             verify:
+
+             wine.id
+            wine.name
+
+
+            Update data:
+            wine.price = 19.99
+            wine.save()
+
+
+
+#############################################################
+
+
+docker compose exec api python /src/manage.py shell
+
+
+--
+
+
+######################################################
+
+
+
+It is in the requirements. There was a compatibility conflict between Django versions , 
+psycopg, Python and gunicorn and then the last remaining one - the TypeError was an
+ imcompatible Typing extension at the bottom - I had encountered that earlier - it isn't 
+ necessary for this build.psycopg[binary] <--- this is the most recent not psycopg3[binary]some 
+ requirements were using old stuff - and there was another incompatibility or issue in requirements - 
+ just make changes to the settings etc. and then the rest was cleaning up the Dockerfile and docker-compose.ymlin 
+ the start up it says ./requirements and that was changed etc.and we don't need to port mapping 5432:5454 - Docker
+  will do thatonce I did those it was good to go - I put a README in thereI also made a teardown.sh --- and add some 
+  notes on the difference between docker system prone and docker prune containers etc. if you run that it will make a clean
+   start to run ./run_compose.shAlso bonus - because we are working in Docker -- we don't need a virtual venv so we don't need to 
+   activate a virtual env - your env is in Docker - I just learned that in this whole process. 
+   
+    Here is a summary - check out and compare to what you have against this onerequirements.txtDockerfiledocker-compose.yml
+    settings.py./run_compose.sh These are all the important spots ---Dockerized Django + Postgres (Pokémon App)1. Python & Dependency
+     CompatibilityProblem: The API container was using Python 3.13, which caused runtime import failures with Django 4.x and PostgreSQL drivers.Fix:
+      Standardized the API image to Python 3.12 (Bookworm slim), which is fully compatible with Django 4.2 and the PostgreSQL ecosystem.Outcome:
+       Gunicorn boots cleanly; no import or worker-boot failures.2. PostgreSQL Driver CleanupProblem: Conflicting PostgreSQL drivers (psycopg and psycopg-binary) 
+       were installed simultaneously.Fix: Consolidated to a single supported driver.Outcome: Clean database driver imports and stable database connections.3. Correct 
+       Database Networking in Docker• Problem: Initial confusion between host ports and container ports.• Fix: Confirmed correct container-to-container 
+       configuration:• Django connects to Postgres via:HOST = "db"PORT = 5432• Outcome: Django reliably connects to Postgres over Docker’s internal network. (edited)

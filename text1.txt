@@ -1,0 +1,233 @@
+
+
+JORDAN CLASS:
+
+
+
+settings= creates a secret key.the most important things so far.
+1.install apps 
+2.database
+#https://github.com/CP-Evenings-and-Weekends/curriculum/tree/main/Module_05_Django/week12/day1
+
+
+NEED TO MAKE SURE
+
+1. VIRTUAL ENVIROMENT ACTIVATED. 
+#python3 -m venv venv
+2. ACTIVATED
+#source venv/bin/activate
+3. INSTALL DJANGO 
+#pip install django
+pip install --upgrade pip
+
+4.SRATPROJECT 
+#python -m django startproject pokedex_proj .# remember this is creating the manage.py package so if you changing anything on startproject, it needs to be erased. all the way to venv.
+
+#python -m pip install --upgrade pip 
+#pip install "psycopg[binary]"
+5.CHECK PIP LIST (CHECKING FOR LSIT IN IT )
+#pip list 
+6.pip install "psycopg[binary]"
+7.moving pip list  into requirements.tx
+8.#pip freeze > requirements.txt
+
+8.python manage.py startapp pokemon_app ------>> this comes with MODEL AND TEST.PY THE MOST IMPORTANT THING TO CHECKOUT.
+9.python manage.py runserver
+10.touch docker-compose.yml (make sure is having right version) its given in readme. DONT FORGET TOUCH
+####dont forget to add the right name of the app created under 
+
+
+
+11.CHECKE POKEDEX(project) AND ALLWAYS CHECK SETTINGS AND CHECK INSTALLED_APPS(<name of the app created in this case 'pokemon_app',>)AND database(given).
+12.docker-compose.yml(ADD HERE VERSION AND AND WHAT BELONGS) ------>>>>docker compose up (docker-compose up -d)
+
+13.CHECK POKEMON_APP AND CHECK MODELS.PY (MAKE SURE SAME CLASS AND IMPORT #this is where we specify details as classm,name CharField ,level integerfiedl)
+
+## pokemon_app/models.py
+
+# models has many different methods we will utilize when creating our Models
+from django.db import models
+
+# Create your models here.
+# models.Model tell Django this is a Model that should be reflected on our database
+class Pokemon(models.Model):
+    # CharField is a character field and has a default max length of 255 characters
+    name = models.CharField(max_length=255)
+    # IntegerField will allow only solid numerical values as input
+    level = models.IntegerField(default=1)
+####docker compose up -d. very important to update.
+
+14.python manage.py makemigrations
+15.python manage.py migrate 
+16.docker exec -it  django-pokemon-example-db-1 psql -h localhost -p 5432 -U postgres -d pokedex_db (MAKE SURE IS THE SAME NAME ON DATABASE)
+#django-pokemon-example-db-1 container name ======>>> i could use container id or container name ------>> docker ps the last code is the name.
+# got to pokedex_proj and find DATABE find the name od the database before exec.
+
+#exit with \q in sql database  and  \dt to check all the tables and info in it.
+
+
+ONLY IN DJANGO CONSOLE.
+
+DONT FORGET TO ALWAYS #python manage.py runserver
+
+
+
+
+
+REMEMBER THAT WHEN YOU CHANGE ANYTHING ON THE FIELD LIKE DATA OR TYPE OF DATA. IN MODEL.PY
+MAKE SURE YOU UPDATING THIS WITH THIS .
+#### anythin about manage is basically DJANGO
+---- python manage.py makemigrations
+---- python manage.py migrate
+---- python manage.py runserver
+---- python manage.py shell -------> thats django console and operate frin ther e
+
+
+
+
+####################VERY IMPORTANT#############################
+
+17.python manage.py shell (this is django console)
+
+
+18.from pokemon_app.models import Pokemon
+19.pikachu = Pokemon(name = 'Pikachu', level = 12)
+20.pikachu.save()
+#Pokemon.objects.all() ======>> we need to make sure evry object im creating is there in this command as an object.
+3print(pikachu)
+21. exit() ----->> to exit django-console ####### I COULD ADD ANYTHING FROM DJANGO INTO MY DATABASE 
+
+
+22. CHECK DATABASE
+23. ctrl+c to get of django dataframe. 
+
+
+##############################################################
+
+
+## pokedex_proj/settings.py
+
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'pokemon_app',
+]
+
+
+( touch docker-composed.yml) to create a docker with specifications addoinf this below.
+version: '3'
+services:
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=pokedex_db
+    ports:
+      - '5454:5432'
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+
+
+  ## pokedex_proj/settings.py
+## our settings.py file is in the pokedex directory, but if you named your project a different name, then look for that folder name.
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "pokedex_db",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "localhost",  
+        "PORT": 5454, # This is the port on the host machine (which will be mapped to 5432 in the container)
+    }
+}
+
+#REMEMBER THE TEST.PY COMES WITH THE COPY THAT  AND PASTE ONTHE POKEMON APP.
+#REMEMBER THAT METHODS DONT NEED ANY MIGRATIONS 
+
+
+#commnads to know 
+rm -rf <name>
+histoty
+!code. and it will call the comand.
+
+
+
+docker exec -it db515be61c48      psql -h localhost -p 5432 -U postgres pokedex_db
+
+docker compose down -v
+
+docker compose up -d
+
+docker compose restart
+   
+
+docker compose down 
+docker stop  <>
+docker prone  =====>> yes
+
+
+###############################
+
+docker compose version
+docker compose up
+docker compose up -d
+docker compose up --build
+docker compose down
+docker compose down -v
+docker compose ps
+docker compose logs
+docker compose logs -f
+docker compose exec api bash
+docker compose build
+docker compose stop
+docker compose start
+docker compose restart
+
+#########################
+
+lsof -i :8000------>> it will give me an PID
+
+THEN GET RID OF IT :
+
+kill -9 <PID>
+#####################
+
+
+
+docker system df
+docker system prune -a
+docker system prune --volumes
+##############################
+
+dprune='docker system prune -af'
+vprune='docker volume prune --filter all=1 -f
+docker system prune 
+
+
+############################
+docker desktop:
+
+open -a Docker      ⚠️ Wait ~10–20 seconds until it fully starts.
+docker info
+
+
+
+docker compose down -v
+docker system prune
+
+PORT IS SOMETHING  DOCKER DOES AUTOMATICALLY
+
+
+http://localhost:8000
+nvim

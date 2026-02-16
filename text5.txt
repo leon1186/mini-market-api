@@ -1,0 +1,125 @@
+🎯 What Actually Impresses Companies?
+
+Not “I used AWS.”
+
+But:
+
+I deployed using Docker
+
+I configured ports
+
+I handled environment variables
+
+I managed Postgres persistence
+
+I secured endpoints with token authentication
+
+I understood CORS and production settings
+
+AWS is just the infrastructure.
+
+
+
+
+########################
+
+
+Interview Conversation (Most Important)
+
+When they ask:
+
+“Have you deployed to the cloud?”
+
+You say:
+
+Yes. I deployed a Django REST API + Postgres + Nginx using Docker on AWS EC2.
+I configured security groups, managed ports 80/8000, and handled environment variables for production.
+
+Now you sound like a backend engineer.
+
+
+
+
+
+mac terminal:
+~./ssh chom 400 ""market_key.pem"
+
+ssh -i "market_key.pem" ec2-user@ec2-54-236-222-177.compute-1.amazonaws.com
+
+
+
+
+
+ec2 terminal: once created ~/ terminal add this:
+
+sudo yum install -y git && \
+sudo yum install docker -y && \
+sudo service docker start && \
+sudo usermod -aG docker $USER  && \
+# sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose && \
+# sudo chmod +x /usr/local/bin/docker-compose && \
+newgrp docker
+
+
+
+mac terminal:
+ssh-keygen -t rsa -b 4096 -C "myname@gmail.com"=======>>>>> configuring your rsa rsa_pub
+
+
+from mac:
+copy the lecture_rsa.pub into git hub generating a key. add a description 
+
+
+in ~/.ssh ========>>>>scp -i "market_key.pem" market_rsa market_rsa.pub ec2-user@ec2-54-236-222-177.compute-1.amazonaws.com:~/.ssh/ 
+
+
+
+
+ec2 terminal:
+
+eval "$(ssh-agent -s)"
+
+ssh-add ~/.ssh/market_rsa
+
+20.GIT CLONE SSH CODE FROM GIT HUB as SSH =====>>> make sure you do this in ~/ ec2 terminal  
+
+
+
+
+remember you have your .env in ignore: 
+so nano .env on ec2 temrinal  and copy that manually.
+
+
+ec2:
+docker compose v2 installation:
+just copy this and run it in your ec2 terminal.
+###################################################
+
+DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+
+mkdir -p $DOCKER_CONFIG/cli-plugins
+
+curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 \
+  -o $DOCKER_CONFIG/cli-plugins/docker-compose
+
+chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+
+###################################################
+ec2: docker buildx.
+sudo curl -SL https://github.com/docker/buildx/releases/download/v0.17.1/buildx-v0.17.1.linux-amd64 \
+  -o /usr/libexec/docker/cli-plugins/docker-buildx
+
+sudo chmod +x /usr/libexec/docker/cli-plugins/docker-buildx
+
+
+
+###################################################
+ec2:
+sudo systemctl restart docker
+
+
+
+
+ec2:
+nano .env on ec2 teminal and copy and paste what youhave in your local.
+thats the profesional way.

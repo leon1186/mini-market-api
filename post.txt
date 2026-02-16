@@ -1,0 +1,134 @@
+
+In settings.py, you can configure localization:
+
+LANGUAGE_CODE = "es-co"
+
+TIME_ZONE = "America/Bogota"
+
+USE_I18N = True
+USE_TZ = True
+
+
+
+#############################
+ settings:
+SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = os.getenv("DEBUG") == "True"
+#############################
+
+
+#############################
+When you change models.py
+You run:
+docker compose exec api python manage.py makemigrations
+docker compose exec api python manage.py migrate
+
+#############################
+===>>>>When you are just starting the app
+You only run:
+docker compose exec api python manage.py migrate
+======>>>Because migration files already exist.
+
+
+#############################
+
+to check database:
+
+#docker compose exec db psql -U postgres -d market
+
+
+docker compose exec api python manage.py shell
+#############################
+
+
+from django.contrib.auth.models import User
+from apps.market.models import Store, Category, Product, Sale, SaleItem
+
+
+
+owner = User.objects.create_user(
+    username="condo_owner",
+    password="1234",
+    email="owner@condostore.com"
+)
+owner
+
+
+store = Store.objects.create(
+    name="Condo Mini Market",
+    owner=owner
+)
+store
+
+
+
+cleaning = Category.objects.create(name="Cleaning", store=store)
+food = Category.objects.create(name="Food", store=store)
+beverages = Category.objects.create(name="Beverages", store=store)
+
+cleaning, food, beverages
+
+
+
+
+clorox = Product.objects.create(
+    name="Clorox",
+    price=8500,
+    stock_quantity=25,
+    category=cleaning,
+    store=store
+)
+
+rice = Product.objects.create(
+    name="Rice 1kg",
+    price=4200,
+    stock_quantity=50,
+    category=food,
+    store=store
+)
+
+coke = Product.objects.create(
+    name="Coca-Cola 1.5L",
+    price=6000,
+    stock_quantity=40,
+    category=beverages,
+    store=store
+)
+
+clorox, rice, coke
+
+#############################
+
+
+🧠 Simple Summary
+corsheaders.middleware.CorsMiddleware:
+✔ Adds CORS headers
+✔ Allows frontend to call backend
+✔ Prevents browser blocking
+✔ Required when ports/domains differ
+✔ Important for EC2 deployments
+#############################
+🚀 Think Of It Like This
+docker compose exec is like knocking on the door of a running container.
+But entrypoint.sh is what happens inside the house when it wakes up.
+Two different layers.
+
+
+#############################
+docker compose exec api python manage.py shell
+from rest_framework.authtoken.models import Token
+Token.objects.all()
+
+
+#SELECT id, username, email, is_superuser FROM auth_user;
+
+######################################
+# TO GENERATE A TOKEN:
+from rest_framework.authtoken.models import Token
+
+user = User.objects.get(username="owner1")
+token = Token.objects.create(user=user)
+
+print(token.key)
+
+######################################
