@@ -222,7 +222,7 @@ open -a Docker      ⚠️ Wait ~10–20 seconds until it fully starts.
 docker info
 
 
-
+docker compose exec db psql -U postgres -d market
 docker compose down -v
 docker system prune
 

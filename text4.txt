@@ -1,11 +1,12 @@
 docker compose exec api python manage.py shell
 
+
 from django.contrib.auth.models import User
 from apps.market.models import Store, Category, Product
 
 user = User.objects.create_user(
-    username="owner1",
-    password="1234"
+    username="leon1186",
+    password="leon1186"
 )
 
 store = Store.objects.create(
@@ -16,12 +17,12 @@ store = Store.objects.create(
 
 
 beverages = Category.objects.create(
-    store=store,
+    store="Mini Market EC2",
     name="Beverages"
 )
 
 snacks = Category.objects.create(
-    store=store,
+    store="Mini Market EC2",
     name="Snacks"
 )
 
@@ -45,7 +46,7 @@ Product.objects.create(
 )
 
 
-
+docker compose exec db psql -U postgres -d market
 http://localhost:8000/api/products/
 
 docker compose exec api python manage.py createsuperuser
@@ -112,3 +113,13 @@ list() → GET
 retrieve() → GET by ID
 
 That’s why DRF is powerful.
+
+
+
+
+
+Internet
+   ↓
+Port 80  → frontend container (nginx)
+Port 8000 → api container (gunicorn)
+Port 5432 → db container (internal only)

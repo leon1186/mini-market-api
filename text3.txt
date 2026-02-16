@@ -34,6 +34,10 @@ docker compose exec api python manage.py migrate
 docker compose exec api python manage.py createsuperuser
 
 
+very important command to check api connection.
+docker compose logs api --tail=50 #last 50 lines 
+
+
 
 ###################################
 

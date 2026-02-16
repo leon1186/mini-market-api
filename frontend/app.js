@@ -1,8 +1,11 @@
+
+const baseUrl = "http://54.236.222.177:8000";
+
 const button = document.getElementById("loadBtn");
 const productList = document.getElementById("productList");
 
 // Automatically use same host, but port 8000 for API
-const baseUrl = `${window.location.protocol}//${window.location.hostname}:8000`;
+// const baseUrl = "http://54.236.222.177:8000";
 
 button.addEventListener("click", async () => {
     try {

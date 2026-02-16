@@ -21,6 +21,8 @@ docker compose up -d --build
 # # docker compose exec api env | grep DJANGO
 # # docker compose logs api
 # docker compose restart api
+# docker compose restart 
+
 
 
 

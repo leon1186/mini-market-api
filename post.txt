@@ -38,6 +38,8 @@ to check database:
 
 
 docker compose exec api python manage.py shell
+
+
 #############################
 
 
@@ -115,11 +117,38 @@ Two different layers.
 
 
 #############################
+same command different enviroment:   
+ec2:
+docker compose exec api python manage.py shell
+local:
+docker compose exec api python manage.py shell
+
+
+
+
+
+
+
 docker compose exec api python manage.py shell
 from rest_framework.authtoken.models import Token
 Token.objects.all()
 
 
+docker compose exec api python manage.py shell
+from django.contrib.auth.models import User
+from apps.market.models import Store, Product, Category, Sale
+
+User.objects.all()
+Store.objects.all()
+Product.objects.all()
+Category.objects.all()
+Sale.objects.all()
+
+######################################
+
+
+docker compose exec db psql -U postgres -d market
+#select id,username from auth_user;
 #SELECT id, username, email, is_superuser FROM auth_user;
 
 ######################################
@@ -132,3 +161,40 @@ token = Token.objects.create(user=user)
 print(token.key)
 
 ######################################
+
+django /Gunicorn
+
+--bind 0.0.0.0:8000
+
+ACCEPT CONNECTIONS FROM ANYWHERE BUT NOT PUBLIC IP.
+
+
+######################################
+localhost
+127.0.0.1. =====THIS ARE LOCAL "THIS MACHINE"
+0.0.0.0
+
+
+from rest_framework.authtoken.models import Token
+user = User.objects.get(username="leon1186")
+token, created = Token.objects.get_or_create(user=user)
+print(token.key)
+
+
+
+curl -H "Authorization: Token 8af83a49c3aea0ecb8db28aa595c69cde5547308" http://localhost:8000/api/products/
+
+
+
+
+
+from apps.market.models import Store
+
+user = User.objects.get(username="leon1186")
+
+store = Store.objects.create(
+    name="Mini Market EC2",
+    owner=user
+)
+
+store

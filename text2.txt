@@ -83,7 +83,7 @@ docker compose exec api python /src/manage.py shell
 
 docker compose exec api python /src/manage.py shell
 
-
+docker compose exec db psql -U postgres -d market
 --
 
 

@@ -65,7 +65,7 @@ ssh-keygen -t rsa -b 4096 -C "myname@gmail.com"
 
 17.scp -i "<KEYNAME>.pem" id_rsa id_rsa.pub ec2-user@ec2-44-199-230-104.compute-1.amazonaws.com:~/.ssh/
 
-    
+
 #######
 EC2 terminal 
 18.eval "$(ssh-agent -s)"
@@ -145,3 +145,39 @@ EC2:
 
 
 13.100 hours in aws max 
+
+##############################################
+
+                TOKEN
+
+
+docker compose exec api python manage.py shell
+from rest_framework.authtoken.models import Token
+Token.objects.all()
+
+##############################################
+# TO GENERATE A TOKEN:
+docker compose exec api python manage.py shell
+
+
+from rest_framework.authtoken.models import Token
+
+user = User.objects.get(username="owner1")
+token = Token.objects.create(user=user)
+
+print(token.key)
+
+
+if you want another one:
+docker compose exec api python manage.py shell
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
+user = User.objects.get(username="owner1")
+token, created = Token.objects.get_or_create(user=user)
+
+print(token.key)
+
+
+
+
