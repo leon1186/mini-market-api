@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'apps.market',
-    "corsheaders",#just added this. 
+    'corsheaders',#just added this. 
+    'rest_framework.authtoken',
 
 ]
 
@@ -55,7 +56,13 @@ MIDDLEWARE = [
     
 
 ]
-CORS_ALLOW_ALL_ORIGINS = True#also new 
+# CORS_ALLOW_ALL_ORIGINS = True#also new 
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://YOUR_EC2_PUBLIC_IP",
+]
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -131,8 +138,16 @@ STATIC_ROOT = BASE_DIR / "staticfiles"#also new
 #         'rest_framework.permissions.IsAuthenticated',
 #     ],
 # }
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.AllowAny',
+#     ],
+# }
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ],
 }
