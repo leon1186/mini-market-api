@@ -22,8 +22,6 @@ docker compose up -d --build
 # # docker compose logs api
 # docker compose restart api
 
-#SELECT id, username, email, is_superuser FROM auth_user;
-
 
 
 #################################

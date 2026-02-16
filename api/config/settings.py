@@ -60,7 +60,7 @@ MIDDLEWARE = [
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://YOUR_EC2_PUBLIC_IP",
+    "http://54.236.222.177",
 ]
 
 
