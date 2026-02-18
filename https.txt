@@ -1,0 +1,6 @@
+http://54.236.222.177:8000/api-auth/login/
+
+
+
+http://54.236.222.177:80.  ==>> checking only front end 
+
