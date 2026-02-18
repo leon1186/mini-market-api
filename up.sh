@@ -28,3 +28,8 @@ docker compose up -d --build
 
 #################################
 
+# ssh ec2-user@IP
+# cd mini-market-api
+# docker compose up -d
+# docker ps
+# curl http://localhost:8000/api/

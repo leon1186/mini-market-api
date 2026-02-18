@@ -3,6 +3,7 @@ services:
   db:
     image: postgres:15
     container_name: market_db
+    restart: always 
     env_file:
       - .env
     volumes:
@@ -10,6 +11,7 @@ services:
   api:
     build: ./api
     container_name: market_api
+    restart: always
     ports:
       - "8000:8000"
     depends_on:
@@ -30,6 +32,7 @@ services:
   frontend:
     build: ./frontend
     container_name: market_frontend
+    restart: always
     ports:
       - "80:80"
     depends_on:
