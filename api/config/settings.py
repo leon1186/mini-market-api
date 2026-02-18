@@ -56,7 +56,8 @@ MIDDLEWARE = [
     
 
 ]
-# CORS_ALLOW_ALL_ORIGINS = True#also new 
+CORS_ALLOW_ALL_ORIGINS = True
+#also new 
 
 
 CORS_ALLOWED_ORIGINS = [

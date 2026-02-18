@@ -1,6 +1,17 @@
 http://54.236.222.177:8000/api-auth/login/
 
+http://54.236.222.177:8000/api/products/
+
+http://54.236.222.177:80.  ==>> checking only front-end 
+
+ http://localhost:8000/api/products/ 
 
 
-http://54.236.222.177:80.  ==>> checking only front end 
+token:
+8af83a49c3aea0ecb8db28aa595c69cde5547308
 
+
+confirmation of back-end working 100%:
+
+curl -H "Authorization: Token YOUR_TOKEN" http://54.236.222.177:8000/api/products/
+curl -H "Authorization: Token 8af83a49c3aea0ecb8db28aa595c69cde5547308" http://54.236.222.177:8000/api/products/
