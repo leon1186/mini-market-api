@@ -1,5 +1,74 @@
 docker compose exec api python manage.py shell
+###############################
+import django
+django.apps.apps.app_configs.keys()
 
+dict_keys(['admin', 'auth', 'contenttypes', 'sessions', 'messages', 'staticfiles', 'rest_framework', 'market', 'corsheaders', 'authtoken'])
+ 
+
+
+ thyats the name of my api market 
+###############################
+
+to check the real django path:
+1.import sys
+sys.path
+
+2.import django
+django.apps.apps.get_app_config('market').name
+
+3.from apps.market.models import Store, Category, Product, Sale, SaleItem
+
+Store.objects.all()
+Category.objects.all()
+Product.objects.all()
+
+
+to add thing on it :
+
+Store.objects.all()
+store = Store.objects.first()
+
+Category.objects.create(name="Electronics", store=store)
+Category.objects.create(name="Accessories", store=store)
+Category.objects.create(name="Office", store=store)
+
+Category.objects.all()
+
+cat = Category.objects.get(name="Electronics")
+
+Product.objects.create(
+    name="Laptop Lenovo",
+    store=store,
+    category=cat,
+    price=2500000,
+    stock_quantity=10
+)
+
+Product.objects.create(
+    name="Monitor Samsung",
+    store=store,
+    category=cat,
+    price=900000,
+    stock_quantity=7
+)
+
+
+Product.objects.all()
+###############################
+
+
+Very important portfolio-level next step (recommended)
+Right now you are inserting manually, but real backend systems do:
+
+
+seed_database.py
+fixtures.json
+POST /api/categories/
+POST /api/products/
+
+
+###############################
 
 from django.contrib.auth.models import User
 from apps.market.models import Store, Category, Product
@@ -17,7 +86,7 @@ store = Store.objects.create(
 
 
 beverages = Category.objects.create(
-    store="Mini Market EC2",
+    store=store,
     name="Beverages"
 )
 

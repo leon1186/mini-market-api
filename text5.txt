@@ -42,6 +42,9 @@ Now you sound like a backend engineer.
 
 
 mac terminal:
+
+if it gets frozen restart your ssh port by 0.0.0.0 all traffic and put it back again
+
 ~./ssh chom 400 ""market_key.pem"
 
 ssh -i "market_key.pem" ec2-user@ec2-54-236-222-177.compute-1.amazonaws.com
