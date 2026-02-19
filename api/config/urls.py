@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("apps.market.urls")),
     path("api-auth/", include("rest_framework.urls")),
+    
 ]
 
 
